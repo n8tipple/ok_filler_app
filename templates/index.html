@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>All Facilities</h2>
+    {% if facilities %}
+        <ul>
+            {% for facility in facilities %}
+                <li>
+                    <a href="{{ url_for('facility_detail', facility_id=facility['id']) }}">{{ facility['facility_name'] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No facilities found. <a href="{{ url_for('add_facility') }}">Add a new facility</a>.</p>
+    {% endif %}
+{% endblock %}

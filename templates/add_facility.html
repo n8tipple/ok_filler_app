@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Add Facility</h2>
+    <form method="post" class="facility-detail-form">
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="facility_name">Facility Name:</label>
+                <input type="text" name="facility_name" id="facility_name" required>
+            </div>
+            <div class="form-row">
+                <label for="api_numbers">API Numbers (comma-separated):</label>
+                <input type="text" name="api_numbers" id="api_numbers">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="save-button">Add Facility</button>
+        </div>
+    </form>
+{% endblock %}

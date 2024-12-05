@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Facility Detail and Information</h2>
+    <form method="post" class="facility-detail-form">
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="facility_name">Facility Name:</label>
+                <input type="text" name="facility_name" id="facility_name" value="{{ facility['facility_name'] }}" required>
+            </div>
+            <div class="form-row">
+                <label for="api_numbers">API Numbers (comma-separated):</label>
+                <input type="text" name="api_numbers" id="api_numbers" value="{{ facility['api_numbers'] }}">
+            </div>
+            <div class="form-row">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" value="{{ response['name'] }}" required>
+            </div>
+            <div class="form-row">
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" value="{{ response['title'] }}">
+            </div>
+            <div class="form-row">
+                <label for="company">Company:</label>
+                <input type="text" name="company" id="company" value="{{ response['company'] }}" required>
+            </div>
+            <div class="form-row">
+                <label for="street">Street:</label>
+                <input type="text" name="street" id="street" value="{{ response['street'] }}">
+            </div>
+            <div class="form-row">
+                <label for="city">City:</label>
+                <input type="text" name="city" id="city" value="{{ response['city'] }}">
+            </div>
+            <div class="form-row">
+                <label for="state">State:</label>
+                <input type="text" name="state" id="state" value="{{ response['state'] }}">
+            </div>
+            <div class="form-row">
+                <label for="zip">Zip:</label>
+                <input type="text" name="zip" id="zip" value="{{ response['zip'] }}">
+            </div>
+            <div class="form-row">
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" name="phone_number" id="phone_number" value="{{ response['phone_number'] }}" required>
+            </div>
+            <div class="form-row">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="{{ response['email'] }}" required>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" name="save" class="save-button">Save</button>
+            <button type="submit" name="import_csv" class="neutral-button">Import RBDMS Well Data</button>
+            <button type="button" onclick="window.location.href='{{ url_for('export', facility_id=facility['id']) }}'" class="neutral-button">Export Data</button>
+            <button type="submit" name="delete_facility" class="delete-button" onclick="return confirm('Are you sure you want to delete this facility?');">Delete Facility</button>
+        </div>
+    </form>
+
+    {% if well_data_list %}
+        <h3>Imported RBDMS Well Data</h3>
+        <table class="well-data-table">
+            <thead>
+                <tr>
+                    <th>API Number</th>
+                    <th>Well Name</th>
+                    <th>Well Num</th>
+                    <th>Operator</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>County</th>
+                    <th>PLSS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for well_data in well_data_list %}
+                    <tr>
+                        <td>{{ well_data['api_number'] }}</td>
+                        <td>{{ well_data['WELL_NAME'] }}</td>
+                        <td>{{ well_data['WELL_NUM'] }}</td>
+                        <td>{{ well_data['OPERATOR'] }}</td>
+                        <td>{{ well_data['SH_LAT'] }}</td>
+                        <td>{{ well_data['SH_LON'] }}</td>
+                        <td>{{ well_data['COUNTY'] }}</td>
+                        <td>{{ well_data['PLSS'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

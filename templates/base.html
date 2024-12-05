@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OK Filler App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        // Auto-dismiss flash messages after 5 seconds
+        setTimeout(function() {
+            var flashMessages = document.getElementById('flash-messages');
+            if (flashMessages) {
+                flashMessages.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+</head>
+<body>
+    <header>
+        <h1>OK Filler App</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('add_facility') }}">Add Facility</a>
+            <!-- Facility Switcher -->
+            {% if nav_facilities %}
+                <form method="post" action="{{ url_for('index') }}" class="facility-switcher">
+                    <select name="facility" onchange="this.form.submit()">
+                        <option value="">Select Facility</option>
+                        {% for facility in nav_facilities %}
+                            <option value="{{ facility['id'] }}">{{ facility['facility_name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            {% endif %}
+        </nav>
+    </header>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages" id="flash-messages">
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
